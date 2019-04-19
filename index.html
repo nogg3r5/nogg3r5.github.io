@@ -81,6 +81,37 @@
 <p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/exit-pssession?view=powershell-6">Exit-PSSession</a></p>
 <p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enter-pssession?view=powershell-6">Enter-PSSession</a></p>
 </section>
+
+<section>
+<h2>Sending Email with Powershell</h2>
+<p>Emailing log files to yourself is an easy way to check scheduled scripts are working correctly</p>
+<p>Gmail:</p>
+<pre><code class="Powershell">$secpasswd = ConvertTo-SecureString <i>YourPassword</i> -AsPlainText -Force
+$mycreds = New-Object System.Management.Automation.PSCredential (<i>YourGmailAddress</i>, $secpasswd)
+$From = "<i>YourGmail</i>"
+$To = "<i>DestinationAddress</i>"
+$Attachment = "c:\scripts\file.txt"
+$Subject = "<i>Subject</i>"
+$Body = "<i>Body</i>"
+$SMTPServer = "smtp.gmail.com"
+$SMTPPort = "587"
+Send-MailMessage -From $From -to $To -Subject $Subject -Body $Body -SmtpServer $SMTPServer -port $SMTPPort -UseSsl -Credential $mycreds -Attachments $Attachment</code></pre>
+
+<pre><code class="Powershell">$secpasswd = ConvertTo-SecureString <i>YourPassword</i> -AsPlainText -Force
+$userid = New-Object System.Management.Automation.PSCredential (<i>Your365Address</i>, $secpasswd)
+$mycreds=Get-Credential $userid
+$From = "<i>Your365Address</i>"
+$To = "<i>DestinationAddress</i>"
+$Attachment = "c:\scripts\file.txt"
+$Subject = "<i>Subject</i>"
+$Body = "<i>Body</i>"
+$SMTPServer = "amtp.office365.com"
+$SMTPPort = "587"
+Send-MailMessage -From $From -to $To -Subject $Subject -Body $Body -SmtpServer $SMTPServer -port $SMTPPort -UseSsl -Credential $mycreds -Attachments $Attachment</code></pre>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/send-mailmessage?view=powershell-6">Send-MailMessage</a></p>
+
+</section>
+
 <section>
 <h2>Get a list of All Hyper-V VMs</h2>
 
