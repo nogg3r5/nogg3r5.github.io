@@ -180,6 +180,10 @@ Invoke-Command -VMName $vm.name -ScriptBlock {<i>YourCommand</i>}
         CommittedGB = ($GetVhd.FileSize / 1GB)
     }
 }</code></pre>
+<p>Get the Integration Services Version of each VM in a cluster.</p>
+<pre><code class="powershell">$clusterNodes = Get-ClusterNode;
+ForEach($item in $clusterNodes)
+{Get-VM -ComputerName $item.Name | ft Name,IntegrationServicesVersion | out-file c:\temp\intservices.txt}</code></pre>
 
 <p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/hyper-v/get-vm?view=win10-ps">Get-VM</a></p>
 <p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/failoverclusters/get-clustergroup?view=win10-ps">Get-ClusterGroup</a></p>
