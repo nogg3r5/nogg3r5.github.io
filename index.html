@@ -83,6 +83,19 @@
 </section>
 
 <section>
+<h2>Writing to Files</h2>
+<p>Saving command output and session output can be useful for debugging and checking things worked correctly.</p>
+<p>The most simple solution is out-file.</p>
+<pre><code class="Powershell">get-childitem c:\scripts|out-file c:\scripts\output.txt</code></pre>
+<p>For logging an entire Powershell session use start-transcript</p>
+<pre><code class="Powershell">Start-Transcript -Path "C:\transcripts\transcript0.txt"
+stop-transcript</code></pre>
+
+<p class="source"><a href="">start-transcript</a></p>
+<p class="source"><a href="">out-file</a></p>
+</section>
+
+<section>
 <h2>Sending Email with Powershell</h2>
 <p>Emailing log files to yourself is an easy way to check scheduled scripts are working correctly</p>
 <p>Gmail:</p>
