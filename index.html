@@ -124,8 +124,23 @@ Invoke-Command -VMName $vm.name -ScriptBlock {<i>YourCommand</i>}
 } -Credential $credential
 }
 </pre></code>
+
+<p>Get the provisioned size of eavh VM's VHD and the actual size..</p>
+<pre><code class="powershell">Get-VM | ForEach { $Vm = $_; $_.HardDrives } | ForEach {
+    $GetVhd = Get-VHD -Path $_.Path
+    [pscustomobject]@{
+        Vm = $Vm.Name
+        Name = $_.Name
+        Type = $GetVhd.VhdType
+        ProvisionedGB = ($GetVhd.Size / 1GB)
+        CommittedGB = ($GetVhd.FileSize / 1GB)
+    }
+}</code></pre>
+
 <p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/hyper-v/get-vm?view=win10-ps">Get-VM</a></p>
 <p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/failoverclusters/get-clustergroup?view=win10-ps">Get-ClusterGroup</a></p>
+<p class="source"><a href="https://stackoverflow.com/questions/39086307/how-to-get-actual-hard-disk-memory-of-a-vm">Stack Overflow: How to Get Actual Hard Disk Memory of A VM?</a></p>
+
 </section>
 
 <section>
