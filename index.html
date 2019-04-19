@@ -125,7 +125,7 @@ Invoke-Command -VMName $vm.name -ScriptBlock {<i>YourCommand</i>}
 }
 </pre></code>
 
-<p>Get the provisioned size of eavh VM's VHD and the actual size..</p>
+<p>Get the provisioned size of each VM's VHD and the actual size..</p>
 <pre><code class="powershell">Get-VM | ForEach { $Vm = $_; $_.HardDrives } | ForEach {
     $GetVhd = Get-VHD -Path $_.Path
     [pscustomobject]@{
