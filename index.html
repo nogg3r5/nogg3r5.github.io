@@ -1,0 +1,265 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>Scripts I Use</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+<link rel="stylesheet" href="css/highlight/default.css">
+<script src="js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+<div id="container">
+  <h1>Scripts I Use</h1>
+<p>This is a selection of scripts and code snippets I have collected while working in IT Support. I've tried to provide attriubtions where possible, but some of these are old and sources could not be found.</p>
+<p>It should go without saying that you should test these carefully before running them in production environments, please don't blame me if something you copied from the internet breaks something that matters to you.</p>
+
+<section>
+<h2>Remote Powershell</h2>
+<p> The following snippets will help you enable PSRemoting, run remote commands and remote sessions. You need to be an administrator to use this.</p>
+<p>Start by enabling Remote Powershell. If you have access to the machine, run the following:</p>
+<pre><code class="Powershell">Enable-PSremoting</code></pre>
+<p class="source"><a href="https://4sysops.com/wiki/enable-powershell-remoting/">https://4sysops.com/wiki/enable-powershell-remoting/</a></p>
+
+<p>Use the following to run a single command, inserting the command you wish to run on the remote computer instead of <i>Your Code</i>.</p>
+<pre><code class="Powershell">invoke-command -computername <i>Target</i> -scriptblock{<i>Your Code</i>}</code></pre>
+
+<p>Below is a practical example, if you want to mess with your colleague by killing Outlook:</p>
+
+<pre><code class="powershell">invoke-command -Computername Petes-PC -scriptblock{taskkill /IM Outlook.exe /F}</code></pre>
+
+<p>Or really mess with your colleague by restarting their computer:</p>
+
+<pre><code class="powershell">invoke-command -Computername Petes-PC -scriptblock{shutdown /r /t 00}</code></pre>
+
+
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/invoke-command?view=powershell-6">Invoke-Command</a></p>
+
+<p>Alternatively, start a remote session, giving you the ability to run multiple commands one after the other:</p>
+
+<pre><code>New-PSSession -computername <i>computername</i></code></pre>
+
+<p>You can leave the session and leave it running, ready to reconnect to it later:</p>
+
+<pre><code class="powershell">Disconnect-PSSession</code></pre>
+
+<p>Create a named session:</p>
+<pre><code class="powershell">New-PSSession -computername <i>Computername</i> -name <i>SessionName</i></code></pre>
+
+<p>List currently running sessions:</p>
+<pre><code class="powershell">Get-PSSession</code></pre>
+<p>Reconnect to a specific session:</p>
+<pre><code class="powershell">Connect-PSSession -id 2</code></pre>
+<p>Or:</p>
+<pre><code class="powershell">Connect-PSSession -name <i>SessionName</i></code></pre>
+<p>Or end the session:</p>
+<pre><code class="powershell">Exit-PSSession</code></pre>
+<p>Use this to create a temporary session that ends when you exit:</p>
+<pre><code class="powershell">Enter-PSSession</code></pre>
+
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/new-pssession?view=powershell-6">New-PSSession</a></p>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/disconnect-pssession?view=powershell-6">Disconnect-PSSession</a></p>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/get-pssession?view=powershell-6">Get-PSSession</a></p>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/connect-pssession?view=powershell-6">Connect-PSSession</a></p>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/exit-pssession?view=powershell-6">Exit-PSSession</a></p>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enter-pssession?view=powershell-6">Enter-PSSession</a></p>
+</section>
+<section>
+<h2>Get a list of All Hyper-V VMs</h2>
+
+<p>Get a list of all the VMs on the current server:</p>
+
+<pre><code class="Powershell">Get-VM</pre></code>
+
+<p>Get details about a sepcific VM</p>
+
+<pre><code class="Powershell">Get-VM -VMName <i>VmName</i></pre></code>
+
+<p>Get VM's on a sepcific server:</p>
+
+<pre><code class="Powershell">Get-VM -Computername <i>Hyper-VServer</i></pre></code>
+
+<p>Get VM's in a failover cluster:</p>
+
+<pre><code class="Powershell">Get-ClusterGroup | ? {$_.GroupType -eq 'VirtualMachine' } | Get-VM</pre></code>
+
+<p>Get VMs based on a partial name match, replace SRV with the name of your VM/VMs:</p>
+
+<pre><code class="powershell">get-vm|where-object -property name -like "*SRV-*"</pre></code>
+
+<p>Get all VM's and power them on:</p>
+
+<pre><code class="powershell">$vms = get-vm
+Foreach ($vm in $VMs){Start-VM $vm}
+</pre></code>
+
+<p>Get all VM's and run a command within the guest Windows OS:</p>
+
+<pre><code class="powershell">$vms = get-vm
+$credential = Get-Credential
+Foreach ($VM in $VMs)
+{
+Start-VM $vm
+}
+start-sleep -s 60
+foreach($vm in $vms){
+$vm | out-file c:\scripts\regchangelog.txt
+Invoke-Command -VMName $vm.name -ScriptBlock {<i>YourCommand</i>}
+} -Credential $credential
+}
+</pre></code>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/hyper-v/get-vm?view=win10-ps">Get-VM</a></p>
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/failoverclusters/get-clustergroup?view=win10-ps">Get-ClusterGroup</a></p>
+</section>
+
+<section>
+<h2>Test Connectivity</h2>
+<p>Check you can ping a computer:</p>
+<pre><code class="Powershell">test-netconnection -computername <i>ComputerName</i></code></pre>
+
+<p>Check you can connect to a computer on a specific port:</p>
+<pre><code class="Powershell">test-netconnection -port 80 -computername <i>ComputerName</i></code></pre>
+
+<p>Take a list of IPs from a CSV, test RDP connectivity to each IP</p>
+<pre><code class="Powershell">import-csv -path c:\temp\ips.csv | foreach-object{
+$return = test-netconnection -computername $_.IPS -commontcpport rdp
+if ($return.TcpTestsucceeded){echo "True" $_.IPS}else{}
+}</code></pre>
+
+<p class="source"><a href="https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=win10-ps">Test-Netconnection</a></p>
+</section>
+<section>
+<h2>Delete Old User Profiles</h2>
+<p>Delete all user profiles, except those marked as Special, that haven't been used within the last 7 days:</p>
+<pre><code class="Powershell">Get-WMIObject -class Win32_UserProfile | Where {
+(!$_.Special) -and ($_.ConvertToDateTime($_.LastDownloadTime) -lt (Get-Date).AddDays(-7))
+}|remove-wmiobject</code></pre>
+<p class="source"><a href="https://community.spiceworks.com/how_to/124316-delete-user-profiles-with-powershell">https://community.spiceworks.com/how_to/124316-delete-user-profiles-with-powershell</a></p>
+</section>
+ 
+<section>
+<h2>Get All User Sessions on All Servers in Acive Directory</h2>
+<p>This will list all the users logged in to all the servers found in Active Directory:</p>
+<pre><code class="Powershell">Import-Module ActiveDirectory
+$Servers = Get-ADComputer -Filter {OperatingSystem -like "*server*"}
+$SessionList
+ForEach ($Server in $Servers) {
+$ServerName = $Server.Name
+Write-Host "Querying $ServerName"
+echo $servername
+$queryResults = (qwinsta /server:$ServerName | foreach { (($_.trim() -replace "\s+",","))} | ConvertFrom-Csv) 
+ForEach ($queryResult in $queryResults) {
+    $RDPUser = $queryResult.USERNAME
+    $sessionType = $queryResult.SESSIONNAME
+	If (($RDPUser -match "[a-z]") -and ($RDPUser -ne $NULL)) { 
+	Write-Host $ServerName logged in by $RDPUser on $sessionType
+    $SessionList = $SessionList + "`n`n" + $ServerName + " logged in by " + $RDPUser + " on " + $sessionType
+    }
+    }
+}
+$SessionList</code></pre>
+
+<p class="source"><a href="https://github.com/chrisdee/Scripts/blob/master/PowerShell/Working/TerminalService/GetActiveTerminalServiceRDPSessions.ps1">https://github.com/chrisdee/Scripts/blob/master/PowerShell/Working/TerminalService/GetActiveTerminalServiceRDPSessions.ps1</a></p>
+</section>
+
+<section>
+<h2>Remotely Enable Remote Desktop</h2>
+<p>We've all been in that position, you've just deployed a new server somewhere and forgotten to enable remote desktop. This will get that sorted for you.</p>
+<p>Save the code below to a .bat file, I called mine <i>remoteon.bat</i>:</p>
+<pre><code>@echo off
+setlocal
+if {%1}=={} goto syntax
+:loop
+if {%1}=={} goto finish
+set remote="\\%1\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server"
+shift
+reg.exe ADD %remote% /v fDenyTSConnections /t REG_DWORD /d 0 /f>nul 2>&1
+if NOT %ERRORLEVEL% EQU 0 @echo %remote% NOT found.
+goto loop
+:syntax
+@echo Syntax: RemoteDesktop Computer1 [Computer2 .... Computern]
+goto loop
+:finish
+endlocal</code></pre>
+<p>Use it like this:<p>
+<pre><code class="bat">remoteon.bat <i>computername</i></code></pre>
+<pre><code class="bat">remoteon.bat <i>computername computername computername</i></code></pre>
+</section>
+
+<section>
+<h2>Ping Loop</h2>
+<p>Ping something, until you stop it, log it to a text file and add a date after every 50 pings...</p>
+<pre><code class="cmd">@echo off
+:loop
+echo %date% %time% >>ping.txt
+echo pinging..
+for %%x in (50) do (
+ping 8.8.8.8 -n %%x >> ping.txt
+)
+goto loop</code</pre>
+</section>
+
+<section>
+<h2>Am I Virtual?</h2>
+<p>the following command will return something like "Microsoft" or "VMWare" if you're in a VM:</p>
+<pre><code class="BAT">wmic baseboard get manufacturer,product</code></pre>
+</section>
+
+<section>
+<h2>Create an Administrator</h2>
+<p>To create a new Administrator user from the command prompt:</p>
+<pre><code class="BAT">net user <i>username</i> <i>password</i> /ADD
+net localgroup administrators <i>username</i> /add</code></pre>
+<p class="source"><a href="https://ss64.com/nt/net-useradmin.html">https://ss64.com/nt/net-useradmin.html</a></p>
+
+</section>
+
+
+
+<!--template
+<section>
+<h2></h2>
+<p></p>
+<pre><code class="Powershell"></code></pre>
+<pre><code class="BAT"></code></pre>
+<p class="source"><a href=""></a></p>
+</section>
+-->
+
+
+
+</div><!--end main container-->
+
+
+  <script src="js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+</body>
+
+</html>
