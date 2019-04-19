@@ -120,7 +120,6 @@ Start-VM $vm
 }
 start-sleep -s 60
 foreach($vm in $vms){
-$vm | out-file c:\scripts\regchangelog.txt
 Invoke-Command -VMName $vm.name -ScriptBlock {<i>YourCommand</i>}
 } -Credential $credential
 }
@@ -155,7 +154,7 @@ if ($return.TcpTestsucceeded){echo "True" $_.IPS}else{}
 </section>
  
 <section>
-<h2>Get All User Sessions on All Servers in Acive Directory</h2>
+<h2>Get All User Sessions on All Servers in Active Directory</h2>
 <p>This will list all the users logged in to all the servers found in Active Directory:</p>
 <pre><code class="Powershell">Import-Module ActiveDirectory
 $Servers = Get-ADComputer -Filter {OperatingSystem -like "*server*"}
