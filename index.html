@@ -190,7 +190,12 @@ ForEach($item in $clusterNodes)
 <p class="source"><a href="https://stackoverflow.com/questions/39086307/how-to-get-actual-hard-disk-memory-of-a-vm">Stack Overflow: How to Get Actual Hard Disk Memory of A VM?</a></p>
 
 </section>
-
+<section>
+<h2>Get the Last Reboot Reason</h2>
+<p></p>
+<pre><code class="Powershell">$after = (get-date).adddays(-55) #55 day limit so we dont get too many results
+Get-WinEvent -ea SilentlyContinue -ComputerName localhost -FilterHashtable @{LogName = "System"; StartTime = $after; id=1074}|fl</code></pre>
+</section>
 <section>
 <h2>Test Connectivity</h2>
 <p>Check you can ping a computer:</p>
