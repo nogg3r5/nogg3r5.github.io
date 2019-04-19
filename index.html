@@ -109,7 +109,7 @@ $Body = "<i>Body</i>"
 $SMTPServer = "smtp.gmail.com"
 $SMTPPort = "587"
 Send-MailMessage -From $From -to $To -Subject $Subject -Body $Body -SmtpServer $SMTPServer -port $SMTPPort -UseSsl -Credential $mycreds -Attachments $Attachment</code></pre>
-
+<p>Office 365:</p>
 <pre><code class="Powershell">$secpasswd = ConvertTo-SecureString <i>YourPassword</i> -AsPlainText -Force
 $userid = New-Object System.Management.Automation.PSCredential (<i>Your365Address</i>, $secpasswd)
 $mycreds=Get-Credential $userid
