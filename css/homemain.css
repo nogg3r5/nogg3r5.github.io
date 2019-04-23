@@ -106,7 +106,7 @@ textarea {
 	margin:auto;
 	background-color: white;
 }
-p,h2,h1{font-family: Candara,helvetica;}
+p,h2,h1,h3{font-family: Candara,helvetica;}
 #Powershell{position: relative; top: 50px;left: 50px;}
 #Powershell > h1, #Coffee > h1{margin: 0;}
 #Coffee{position: relative; top: -194.5px;left: 400px;}
