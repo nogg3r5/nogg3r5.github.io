@@ -102,6 +102,7 @@ textarea {
    Author's custom styles
    ========================================================================== */
 /*html{background-color:gray;}*/
+#home{height: 0px;font-family:times new roman;text-decoration: none;}
 #container{width:800px;
 	margin:auto;
 	background-color: white;
@@ -110,7 +111,7 @@ p,h2,h1,h3{font-family: Candara,helvetica;}
 #Powershell{position: relative; top: 50px;left: 0px; width: 400px;text-align:center;}
 #Powershell > h1, #Coffee > h1{margin: 0;}
 #Coffee{position: relative; top: -194.5px;left: 400px;width: 400px;text-align:center;}
-#Powershell a, #Coffee a, p a{color: black;}
+a{color: black;}
 #powershellimage{height:200px;}
 #coffeeimage{height:200px;float: right;}
 
@@ -121,11 +122,11 @@ p,h2,h1,h3{font-family: Candara,helvetica;}
 
 /* Tooltip text */
 .tooltip .tooltiptext {visibility: hidden;
-  width: 120px;
+  width: 200px;
   background-color: black;
   color: #fff;
-  text-align: center;
-  padding: 5px 0;
+  text-align: left;
+  padding: 5px;
   border-radius: 6px;
  
   /* Position the tooltip text - see examples below! */
