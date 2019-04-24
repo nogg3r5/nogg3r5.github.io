@@ -102,32 +102,51 @@ textarea {
    Author's custom styles
    ========================================================================== */
 /*html{background-color:gray;}*/
-#container{width:800px;
-	margin:auto;
-	background-color: white;
-}
-p,h2,h1{
-	font-family: Candara,helvetica;
-	padding-left: 5px;
-}
+#home{height: 0px;font-family:times new roman;text-decoration: none;}
+#container{width:800px;margin:auto;background-color: white;}
+p,h2,h1,h3{font-family: Candara,helvetica;  padding-left: 5px;}
+#Powershell{position: relative; top: 50px;left: 0px; width: 400px;text-align:center;}
+#Powershell > h1, #Coffee > h1{margin: 0;}
+#Coffee{position: relative; top: -194.5px;left: 400px;width: 400px;text-align:center;}
+a{color: black;}
 
-h2{
-	margin-bottom:2px;
-}
-p.source{
-	font-size: 10px;
-	margin:0;
-	padding:0;
-}
-p.source:before{ 
-  content:"Source: ";
-}
+#powershellhomeimage, #coffeehomeimage{height: 200px;}
+#powershellimage{height:200px;float: right;}
+#coffeeimage{height:200px;float: right;}
+
+
+h2{	margin-bottom:2px;}
+p.source{font-size: 10px;margin:0;padding:0;}
+p.source:before{content:"Source: ";}
 /*Wrap text in preformatted code blocks*/
 #container > section > pre > code{    white-space: pre-wrap;       /* Since CSS 2.1 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;  }
+
+
+/* Tooltip container */
+.tooltip {position: relative;display: inline-block;border-bottom: 1px dotted black; /* If you want dots under the hoverable text */}
+
+/* Tooltip text */
+.tooltip .tooltiptext {visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  padding: 5px;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+} 	
 
 
  /* ==========================================================================
