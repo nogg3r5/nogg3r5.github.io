@@ -113,7 +113,7 @@ a{color: black;}
 #powershellhomeimage, #coffeehomeimage{height: 200px;}
 #powershellimage{height:200px;float: right;}
 #coffeeimage{height:200px;float: right;}
-
+#coffeeright{height: 200px; float:right;}
 
 h2{	margin-bottom:2px;}
 p.source{font-size: 10px;margin:0;padding:0;}
