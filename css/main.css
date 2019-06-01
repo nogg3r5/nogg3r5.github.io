@@ -104,6 +104,7 @@ textarea {
 /*html{background-color:gray;}*/
 #home{height: 0px;font-family:times new roman;text-decoration: none;}
 #container{width:800px;margin:auto;background-color: white;}
+#linkcontainer{height: 300px;}
 p,h2,h1,h3{font-family: Candara,helvetica;  padding-left: 5px;}
 #Powershell{position: relative; top: 50px;left: 0px; width: 400px;text-align:center;}
 #Powershell > h1, #Coffee > h1{margin: 0;}
